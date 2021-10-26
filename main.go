@@ -1,29 +1,14 @@
 package main
 
 import (
-	"io/ioutil"
-	"log"
-	"regexp"
-	"strings"
+	"fmt"
 
 	"github.com/disay1/fishscript/src/lexer"
 )
 
 func main() {
-	var sourceCode string
+	var lexems = make(map[int]lexer.LEXEM)
+	lexems = lexer.CreateLexems("main.fis")
 
-	data, err := ioutil.ReadFile("main.fis")
-	if err != nil {
-		log.Print("Err:", err)
-	}
-
-	re := regexp.MustCompile(`\s\s+`)
-	sourceCode = re.ReplaceAllString(string(data), " ")
-	str := strings.Split(sourceCode, ";")
-
-	for q := 0; q < len(str); q++ {
-		str[q] = strings.Trim(str[q], " ")
-	}
-
-	lexer.Start(str)
+	fmt.Println("Result:", lexems[1].Value)
 }
